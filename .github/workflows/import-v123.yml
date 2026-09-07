@@ -1,4 +1,4 @@
-name: Import V123 bundle
+name: Inspect firestorage download route
 
 on:
   workflow_dispatch:
@@ -10,61 +10,27 @@ permissions:
   contents: write
 
 jobs:
-  import:
+  inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Resolve and download V123 bundle
-        env:
-          SHARE_ID: 4tGm-kGGU4oq
-          PUBLIC_ID: F6h2yKO8LqASGvWZ
-          SUBDIR: FGjvSi
-          FILE_ID: 01a079e154ec7729927d9b607968bed5
+      - uses: actions/checkout@v4
+      - name: Inspect route construction
         run: |
-          set -euxo pipefail
           python - <<'PY'
-          import os,requests
-          s=requests.Session(); sid=os.environ['SHARE_ID']; fid=os.environ['FILE_ID']; pub=os.environ['PUBLIC_ID']; sub=os.environ['SUBDIR']
-          bases=['https://api.firestorage.ai/prod/file','https://api.firestorage.ai/dev/file']
-          filedata=None
-          for base in bases:
-              for u in [f'{base}/shares/{sid}/files?maxResults=1000',f'{base}/shares/{sid}/{sub}/files?maxResults=1000']:
-                  r=s.get(u,timeout=60); print('LIST',u,r.status_code,r.text[:1000])
-          for base in bases:
-              for u in [f'{base}/shares/{sid}/files/{fid}/download',f'{base}/shares/{sid}/{sub}/files/{fid}/download',f'{base}/shares/{pub}/files/{fid}/download',f'{base}/files/{fid}/download']:
-                  try:
-                      r=s.get(u,allow_redirects=True,timeout=180)
-                      print('DOWNLOAD',u,'STATUS',r.status_code,'TYPE',r.headers.get('content-type'),'LEN',len(r.content),'FINAL',r.url)
-                      if r.ok and (r.content[:2]==b'PK' or 'zip' in r.headers.get('content-type','').lower()):
-                          open('/tmp/v123.zip','wb').write(r.content); filedata=r; break
-                  except Exception as e: print('ERR',u,e)
-              if filedata: break
-          if not filedata: raise SystemExit('No working firestorage download endpoint')
-          print('ZIP_BYTES',os.path.getsize('/tmp/v123.zip'))
+          import requests,re
+          u='https://firestorage.ai/_next/static/chunks/4899-d89df949f2dbd5af.js'
+          j=requests.get(u,timeout=60).text
+          for needle in ['files/${e.fileId}/download','let B=','B=','const B','function']:
+              print('\n###',needle)
+              start=0; n=0
+              while True:
+                  i=j.find(needle,start)
+                  if i<0: break
+                  print(j[max(0,i-1800):i+2200])
+                  start=i+len(needle); n+=1
+                  if n>=5: break
+          print('\n### API-like strings')
+          for x in sorted(set(re.findall(r'["\'`]([^"\'`]{0,180}(?:shares|download|visitor|file)[^"\'`]{0,180})["\'`]',j,re.I))):
+              print(x)
           PY
-
-      - name: Extract V123
-        run: |
-          set -euxo pipefail
-          rm -rf /tmp/v123
-          mkdir -p /tmp/v123
-          unzip -q /tmp/v123.zip -d /tmp/v123
-          ROOT=$(find /tmp/v123 -mindepth 1 -maxdepth 1 -type d | head -n1)
-          rm -rf ./V123
-          mkdir -p ./V123
-          cp -a "$ROOT"/. ./V123/
-          rm -rf ./V123/__pycache__
-          echo "Imported files: $(find ./V123 -type f | wc -l)"
-
-      - name: Commit V123 files
-        run: |
-          set -euxo pipefail
-          git config user.name 'E-SUN POWER Bot'
-          git config user.email 'e-sunpower-bot@users.noreply.github.com'
-          git add V123
-          git commit -m 'feat: import complete PV System Designer V123' || echo 'No changes to commit'
-          git push origin HEAD:main
+          exit 1
