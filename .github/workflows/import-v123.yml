@@ -1,4 +1,4 @@
-name: Inspect firestorage download route
+name: Inspect firestorage share endpoint
 
 on:
   workflow_dispatch:
@@ -14,23 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect route construction
+      - name: Inspect share endpoint resolver
         run: |
           python - <<'PY'
-          import requests,re
-          u='https://firestorage.ai/_next/static/chunks/4899-d89df949f2dbd5af.js'
-          j=requests.get(u,timeout=60).text
-          for needle in ['files/${e.fileId}/download','let B=','B=','const B','function']:
+          import requests
+          j=requests.get('https://firestorage.ai/_next/static/chunks/4899-d89df949f2dbd5af.js',timeout=60).text
+          for needle in ['shareEndpoint','shareId:l','function v(','async function v','function v=','shareEndpoint:o']:
               print('\n###',needle)
-              start=0; n=0
+              start=0;n=0
               while True:
                   i=j.find(needle,start)
                   if i<0: break
-                  print(j[max(0,i-1800):i+2200])
-                  start=i+len(needle); n+=1
-                  if n>=5: break
-          print('\n### API-like strings')
-          for x in sorted(set(re.findall(r'["\'`]([^"\'`]{0,180}(?:shares|download|visitor|file)[^"\'`]{0,180})["\'`]',j,re.I))):
-              print(x)
+                  print(j[max(0,i-2500):i+3500])
+                  start=i+len(needle);n+=1
+                  if n>=4:break
           PY
           exit 1
