@@ -1,0 +1,87 @@
+name: Import V123 bundle
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/import-v123.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download V123 bundle
+        env:
+          SHARE_URL: https://firestorage.ai/ja/f/4tGm-kGGU4oq
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import os, re, html, requests
+          from urllib.parse import urljoin
+          share=os.environ['SHARE_URL']
+          r=requests.get(share, allow_redirects=True, timeout=60)
+          print('status=', r.status_code)
+          print('final_url=', r.url)
+          print('content_type=', r.headers.get('content-type'))
+          data=r.content
+          if 'zip' in r.headers.get('content-type','').lower() or data[:2] == b'PK':
+              open('/tmp/v123.zip','wb').write(data)
+          else:
+              text=data.decode('utf-8','ignore')
+              open('/tmp/share.html','w',encoding='utf-8').write(text)
+              urls=[]
+              for m in re.findall(r'(?:href|src)=[\"\\\']([^\"\\\']+)', text, re.I):
+                  u=html.unescape(urljoin(r.url,m))
+                  if any(k in u.lower() for k in ('download','zip','file')):
+                      urls.append(u)
+              for m in re.findall(r'https?://[^\"\\\'\\s<>]+', text):
+                  u=html.unescape(m)
+                  if any(k in u.lower() for k in ('download','zip','file')):
+                      urls.append(u)
+              urls=list(dict.fromkeys(urls))
+              print('candidate_urls=')
+              for u in urls: print(u)
+              got=False
+              for u in urls:
+                  try:
+                      rr=requests.get(u,allow_redirects=True,timeout=60)
+                      print('candidate',u,'=>',rr.status_code,rr.headers.get('content-type'),len(rr.content))
+                      if 'zip' in rr.headers.get('content-type','').lower() or rr.content[:2] == b'PK':
+                          open('/tmp/v123.zip','wb').write(rr.content); got=True; break
+                  except Exception as e:
+                      print('candidate_error',u,e)
+              if not got:
+                  print(text[:12000])
+                  raise SystemExit('Could not resolve a downloadable V123 ZIP from the share URL')
+          print('zip_bytes=',os.path.getsize('/tmp/v123.zip'))
+          PY
+
+      - name: Extract V123
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/v123
+          mkdir -p /tmp/v123
+          unzip -q /tmp/v123.zip -d /tmp/v123
+          ROOT=$(find /tmp/v123 -mindepth 1 -maxdepth 1 -type d | head -n1)
+          rm -rf ./V123
+          mkdir -p ./V123
+          cp -a "$ROOT"/. ./V123/
+          rm -rf ./V123/__pycache__
+          echo "Imported files: $(find ./V123 -type f | wc -l)"
+
+      - name: Commit V123 files
+        run: |
+          set -euxo pipefail
+          git config user.name 'E-SUN POWER Bot'
+          git config user.email 'e-sunpower-bot@users.noreply.github.com'
+          git add V123
+          git commit -m 'feat: import complete PV System Designer V123' || echo 'No changes to commit'
+          git push origin HEAD:main
