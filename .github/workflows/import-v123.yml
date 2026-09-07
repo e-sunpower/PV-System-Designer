@@ -1,4 +1,4 @@
-name: Resolve firestorage cushion download
+name: Import V123 bundle
 
 on:
   workflow_dispatch:
@@ -10,29 +10,59 @@ permissions:
   contents: write
 
 jobs:
-  inspect:
+  import:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Resolve cushion and download
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download V123 bundle from firestorage
         run: |
+          set -euxo pipefail
           python - <<'PY'
-          import requests, json
-          s=requests.Session(); base='https://api.firestorage.ai/dev/file'; sid='4tGm-kGGU4oq'; fid='01a079e154ec7729927d9b607968bed5'
-          u=f'{base}/shares/{sid}/cushion-sessions'
-          for body in [{}, {'password':''}]:
-              r=s.post(u,headers={'Content-Type':'application/json'},json=body,timeout=60)
-              print('CUSHION',body,r.status_code,r.text)
-              if r.ok:
-                  try:
-                      cid=r.json().get('cushionId')
-                      print('CUSHION_ID',cid)
-                      for du in [
-                        f'{base}/shares/{sid}/files/{fid}/download',
-                        f'{base}/shares/{sid}/files/{fid}/download?cushionId={cid}',
-                      ]:
-                          rr=s.post(du,timeout=120,headers={'X-Firestorage-Cushion-Id':cid} if cid else {})
-                          print('DL',du,rr.status_code,rr.headers.get('content-type'),len(rr.content),rr.text[:500] if 'json' in rr.headers.get('content-type','') else '')
-                  except Exception as e: print('ERR',e)
+          import os, requests
+          base='https://api.firestorage.ai/dev/file'
+          sid='4tGm-kGGU4oq'
+          fid='01a079e154ec7729927d9b607968bed5'
+          s=requests.Session()
+          r=s.post(f'{base}/shares/{sid}/cushion-sessions',headers={'Content-Type':'application/json'},json={},timeout=60)
+          r.raise_for_status()
+          cushion=r.json()['cushionId']
+          print('cushion session created')
+          r=s.post(f'{base}/shares/{sid}/files/{fid}/download',headers={'X-Firestorage-Cushion-Id':cushion},timeout=60)
+          r.raise_for_status()
+          info=r.json()
+          print('download URL resolved')
+          d=s.get(info['downloadUrl'],stream=True,timeout=180)
+          d.raise_for_status()
+          with open('/tmp/v123.zip','wb') as out:
+              for chunk in d.iter_content(1024*1024):
+                  if chunk: out.write(chunk)
+          print('zip_bytes=',os.path.getsize('/tmp/v123.zip'))
           PY
-          exit 1
+
+      - name: Extract V123
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/v123 ./V123
+          mkdir -p /tmp/v123 ./V123
+          unzip -q /tmp/v123.zip -d /tmp/v123
+          ROOT=$(find /tmp/v123 -mindepth 1 -maxdepth 1 -type d | head -n1)
+          cp -a "$ROOT"/. ./V123/
+          rm -rf ./V123/__pycache__
+          echo "Imported files: $(find ./V123 -type f | wc -l)"
+          echo "Imported directories: $(find ./V123 -type d | wc -l)"
+          test -f ./V123/index.html
+          test -f ./V123/server.py
+          test -f ./V123/render.yaml
+
+      - name: Commit complete V123
+        run: |
+          set -euxo pipefail
+          git config user.name 'E-SUN POWER Bot'
+          git config user.email 'e-sunpower-bot@users.noreply.github.com'
+          git add V123
+          git commit -m 'feat: import complete PV System Designer V123'
+          git push origin HEAD:main
