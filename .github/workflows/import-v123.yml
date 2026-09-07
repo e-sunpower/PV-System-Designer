@@ -1,4 +1,4 @@
-name: Inspect firestorage share endpoint
+name: Resolve firestorage cushion download
 
 on:
   workflow_dispatch:
@@ -14,19 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect share endpoint resolver
+      - name: Resolve cushion and download
         run: |
           python - <<'PY'
-          import requests
-          j=requests.get('https://firestorage.ai/_next/static/chunks/4899-d89df949f2dbd5af.js',timeout=60).text
-          for needle in ['shareEndpoint','shareId:l','function v(','async function v','function v=','shareEndpoint:o']:
-              print('\n###',needle)
-              start=0;n=0
-              while True:
-                  i=j.find(needle,start)
-                  if i<0: break
-                  print(j[max(0,i-2500):i+3500])
-                  start=i+len(needle);n+=1
-                  if n>=4:break
+          import requests, json
+          s=requests.Session(); base='https://api.firestorage.ai/dev/file'; sid='4tGm-kGGU4oq'; fid='01a079e154ec7729927d9b607968bed5'
+          u=f'{base}/shares/{sid}/cushion-sessions'
+          for body in [{}, {'password':''}]:
+              r=s.post(u,headers={'Content-Type':'application/json'},json=body,timeout=60)
+              print('CUSHION',body,r.status_code,r.text)
+              if r.ok:
+                  try:
+                      cid=r.json().get('cushionId')
+                      print('CUSHION_ID',cid)
+                      for du in [
+                        f'{base}/shares/{sid}/files/{fid}/download',
+                        f'{base}/shares/{sid}/files/{fid}/download?cushionId={cid}',
+                      ]:
+                          rr=s.post(du,timeout=120,headers={'X-Firestorage-Cushion-Id':cid} if cid else {})
+                          print('DL',du,rr.status_code,rr.headers.get('content-type'),len(rr.content),rr.text[:500] if 'json' in rr.headers.get('content-type','') else '')
+                  except Exception as e: print('ERR',e)
           PY
           exit 1
