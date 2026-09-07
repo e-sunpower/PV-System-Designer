@@ -20,57 +20,30 @@ jobs:
 
       - name: Resolve and download V123 bundle
         env:
-          SHARE_URL: https://firestorage.ai/ja/f/4tGm-kGGU4oq
           SHARE_ID: 4tGm-kGGU4oq
           PUBLIC_ID: F6h2yKO8LqASGvWZ
           SUBDIR: FGjvSi
+          FILE_ID: 01a079e154ec7729927d9b607968bed5
         run: |
           set -euxo pipefail
           python - <<'PY'
-          import os,requests,re,html
-          from urllib.parse import urljoin
-          share=os.environ['SHARE_URL']; s=requests.Session()
-          page=s.get(share,timeout=60).text
-          base='https://api.firestorage.ai/dev/file'
-          ids=[os.environ['SHARE_ID'],os.environ['PUBLIC_ID']]
-          variants=[
-            f'{base}/shares/{os.environ["SHARE_ID"]}/files?maxResults=1000',
-            f'{base}/shares/{os.environ["SHARE_ID"]}/{os.environ["SUBDIR"]}/files?maxResults=1000',
-            f'{base}/shares/{os.environ["PUBLIC_ID"]}/files?maxResults=1000',
-            f'{base}/objects/{os.environ["PUBLIC_ID"]}/{os.environ["SUBDIR"]}/files?maxResults=1000',
-          ]
-          chosen=None; data=None
-          for u in variants:
-              try:
-                  r=s.get(u,timeout=60)
-                  print('VARIANT',u,'STATUS',r.status_code,'TYPE',r.headers.get('content-type'))
-                  print(r.text[:3000])
-                  if r.ok and r.text.lstrip().startswith('{'):
-                      chosen=u; data=r.json(); break
-              except Exception as e: print('ERR',u,e)
-          if not chosen: raise SystemExit('No working firestorage files endpoint')
-          print('CHOSEN',chosen)
-          print('JSON_KEYS',list(data.keys()))
-          open('/tmp/files.json','w').write(r.text)
-          files=data.get('files') or data.get('objects') or []
-          print('FILES_COUNT',len(files))
-          for x in files: print('FILE',x)
-          if not files: raise SystemExit('Share contains no files')
-          f=files[0]
-          fileid=f.get('fileId') or f.get('id') or f.get('file_id')
-          if not fileid: raise SystemExit('No file id in response')
-          shareid=os.environ['SHARE_ID']
-          dl_variants=[
-            f'{base}/shares/{shareid}/files/{fileid}/download',
-            f'{base}/shares/{shareid}/{os.environ["SUBDIR"]}/files/{fileid}/download',
-            f'{base}/shares/{os.environ["PUBLIC_ID"]}/files/{fileid}/download',
-          ]
-          for u in dl_variants:
-              rr=s.get(u,allow_redirects=True,timeout=120)
-              print('DOWNLOAD',u,'STATUS',rr.status_code,'TYPE',rr.headers.get('content-type'),'LEN',len(rr.content),'FINAL',rr.url)
-              if rr.ok and (rr.content[:2]==b'PK' or 'zip' in rr.headers.get('content-type','').lower()):
-                  open('/tmp/v123.zip','wb').write(rr.content); break
-          else: raise SystemExit('No working firestorage download endpoint')
+          import os,requests
+          s=requests.Session(); sid=os.environ['SHARE_ID']; fid=os.environ['FILE_ID']; pub=os.environ['PUBLIC_ID']; sub=os.environ['SUBDIR']
+          bases=['https://api.firestorage.ai/prod/file','https://api.firestorage.ai/dev/file']
+          filedata=None
+          for base in bases:
+              for u in [f'{base}/shares/{sid}/files?maxResults=1000',f'{base}/shares/{sid}/{sub}/files?maxResults=1000']:
+                  r=s.get(u,timeout=60); print('LIST',u,r.status_code,r.text[:1000])
+          for base in bases:
+              for u in [f'{base}/shares/{sid}/files/{fid}/download',f'{base}/shares/{sid}/{sub}/files/{fid}/download',f'{base}/shares/{pub}/files/{fid}/download',f'{base}/files/{fid}/download']:
+                  try:
+                      r=s.get(u,allow_redirects=True,timeout=180)
+                      print('DOWNLOAD',u,'STATUS',r.status_code,'TYPE',r.headers.get('content-type'),'LEN',len(r.content),'FINAL',r.url)
+                      if r.ok and (r.content[:2]==b'PK' or 'zip' in r.headers.get('content-type','').lower()):
+                          open('/tmp/v123.zip','wb').write(r.content); filedata=r; break
+                  except Exception as e: print('ERR',u,e)
+              if filedata: break
+          if not filedata: raise SystemExit('No working firestorage download endpoint')
           print('ZIP_BYTES',os.path.getsize('/tmp/v123.zip'))
           PY
 
