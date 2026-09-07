@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "source_name": "Mapa Solar Colombia — Emergente (1 km)",
+  "license_note": "El archivo de datos debe ser obtenido de forma autorizada del titular. No se incluye ni se copia la base propietaria en este proyecto.",
+  "netcdf": "mapa_solar_colombia.nc",
+  "geotiff": [],
+  "variable": null,
+  "lat_name": null,
+  "lon_name": null,
+  "monthly_variables": {},
+  "units": "kWh/m²/día",
+  "method": "Consulta espacial por vecino más cercano sobre raster local 1 km"
+}

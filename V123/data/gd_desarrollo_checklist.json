@@ -1,0 +1,747 @@
+{
+  "source": "DESARROLLO PROYECTOS GD(2).xlsx",
+  "sections": [
+    {
+      "item": "1",
+      "title": "Información del Predio",
+      "row": 2
+    },
+    {
+      "item": "2",
+      "title": "Contrato de Arrendamiento",
+      "row": 10
+    },
+    {
+      "item": "3",
+      "title": "Insumos y Estado de Conexión",
+      "row": 12
+    },
+    {
+      "item": "4",
+      "title": "Trámites y Solicitudes",
+      "row": 24
+    }
+  ],
+  "items": [
+    {
+      "item": "1.1",
+      "diligencia": "UBICACIÓN PROYECTO",
+      "descripcion": "KMZ. KML, Shapefile",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.2",
+      "diligencia": "UBICACIÓN PROYECTO",
+      "descripcion": "Fotos del predio",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.3",
+      "diligencia": "CERTIFICADO LIBERTAD Y TRADICIÓN",
+      "descripcion": "Certificado de libertad y tradicion",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.4",
+      "diligencia": "CERTIFICADO LIBERTAD Y TRADICIÓN",
+      "descripcion": "Número de Folio.",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.5",
+      "diligencia": "ESCRITURA PÚBLICA",
+      "descripcion": "Escritura Pública, Correspondiente a Folio MAT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.6",
+      "diligencia": "ESTUDIO DE TÍTULOS",
+      "descripcion": "Estudio de titulos, del predio en mención",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "1.7",
+      "diligencia": "DOCUMENTOS PROPIETARIO",
+      "descripcion": "Cedula de ciudadania, o camara de comercio, certificado de existencia",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Información del Predio"
+    },
+    {
+      "item": "2.1",
+      "diligencia": "CONTRATO DE ARRENDAMIENTO",
+      "descripcion": "Contrato de Arrendamiento, actualizado y firmado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Contrato de Arrendamiento"
+    },
+    {
+      "item": "3.1",
+      "diligencia": "INSUMOS OPERADOR DE RED",
+      "descripcion": "Recibido del radicado Solicitud de Insumos ante O.R",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.2",
+      "diligencia": "INSUMOS OPERADOR DE RED",
+      "descripcion": "Número de Proceso",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.3",
+      "diligencia": "INSUMOS OPERADOR DE RED",
+      "descripcion": "Entrega de Insumos O.R",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.4",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Estudio de Conexión - Documento",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.5",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Recibido Radicado Solicitud Punto de conexion",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.6",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Numero de Exp Pto. Conexión",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.7",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Aprobacion Punto de Conexión",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.8",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Fecha FPO",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.9",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Solicitud prorroga FPO",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.10",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Abrobación Prórroga FPO",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "3.11",
+      "diligencia": "PUNTO DE CONEXIÓN",
+      "descripcion": "Fecha FPO+Prorroga",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Insumos y Estado de Conexión"
+    },
+    {
+      "item": "4.1",
+      "diligencia": "AGENCIA NACIONAL DE TIERRAS ANT",
+      "descripcion": "Carta Solicitud ANT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.2",
+      "diligencia": "AGENCIA NACIONAL DE TIERRAS ANT",
+      "descripcion": "Recibido Radicado ANT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.3",
+      "diligencia": "AGENCIA NACIONAL DE TIERRAS ANT",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.4",
+      "diligencia": "AGENCIA NACIONAL DE TIERRAS ANT",
+      "descripcion": "Certificado ANT",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.5",
+      "diligencia": "UNIDAD DE RESTITUCIÓN DE TIERRAS URT",
+      "descripcion": "Carta Solicitud URT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.6",
+      "diligencia": "UNIDAD DE RESTITUCIÓN DE TIERRAS URT",
+      "descripcion": "Recibo Radicado URT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.7",
+      "diligencia": "UNIDAD DE RESTITUCIÓN DE TIERRAS URT",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.8",
+      "diligencia": "UNIDAD DE RESTITUCIÓN DE TIERRAS URT",
+      "descripcion": "Certificado URT",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.9",
+      "diligencia": "AGENCIA NACIONAL DE HIDROCARBUROS",
+      "descripcion": "Carta Solicitud ANH",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.10",
+      "diligencia": "AGENCIA NACIONAL DE HIDROCARBUROS",
+      "descripcion": "Recibido Radicado ANH",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.11",
+      "diligencia": "AGENCIA NACIONAL DE HIDROCARBUROS",
+      "descripcion": "Número de Radicado",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.12",
+      "diligencia": "AGENCIA NACIONAL DE HIDROCARBUROS",
+      "descripcion": "Certificado ANH",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.13",
+      "diligencia": "AGENCIA NACIONAL DE MINERÍA",
+      "descripcion": "Carta Solicitud ANM",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.14",
+      "diligencia": "AGENCIA NACIONAL DE MINERÍA",
+      "descripcion": "Recibido Agencia Nacional de Mineria ANM",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.15",
+      "diligencia": "AGENCIA NACIONAL DE MINERÍA",
+      "descripcion": "Número de Radicado",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.16",
+      "diligencia": "AGENCIA NACIONAL DE MINERÍA",
+      "descripcion": "Certificado ANM",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.17",
+      "diligencia": "PARQUES NATURALES NACIONALES DE COLOMBIA PNNC",
+      "descripcion": "Consulta SINAP",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.18",
+      "diligencia": "PARQUES NATURALES NACIONALES DE COLOMBIA PNNC",
+      "descripcion": "Certificado SINAP - PNNC",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.19",
+      "diligencia": "AERONAUTICA CIVIL",
+      "descripcion": "Carta Solicitud AEROCIVIL",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.20",
+      "diligencia": "AERONAUTICA CIVIL",
+      "descripcion": "Recibido Radicado Aerocivil",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.21",
+      "diligencia": "AERONAUTICA CIVIL",
+      "descripcion": "Número de Radicado",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.22",
+      "diligencia": "AERONAUTICA CIVIL",
+      "descripcion": "Certificado AEROCIVIL",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.23",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Carta Solicitud Determinantes Ambientales",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.24",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Recibido Radicado CAR -  CARDIQUE",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.25",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.26",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Certificado de No requerimiento y Det Amb",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.27",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Recibido Radicado Aprovechamiento forestal",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.28",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Numero de Radicado Apro. Forestal",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.29",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Documento Aprovechamiento Forestal",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.30",
+      "diligencia": "CORPORACIÓN AUTONOMA REGIONAL - CARDIQUE",
+      "descripcion": "Decreto Aprovechamiento Forestal",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.31",
+      "diligencia": "INSTITUTO COLOMBIANO DE ANTROPOLOGÍA E HISTORIA ICANH",
+      "descripcion": "Carta Solicitud ICANH",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.32",
+      "diligencia": "INSTITUTO COLOMBIANO DE ANTROPOLOGÍA E HISTORIA ICANH",
+      "descripcion": "Recibido Radicado ICANH",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.33",
+      "diligencia": "INSTITUTO COLOMBIANO DE ANTROPOLOGÍA E HISTORIA ICANH",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.34",
+      "diligencia": "INSTITUTO COLOMBIANO DE ANTROPOLOGÍA E HISTORIA ICANH",
+      "descripcion": "Certificado ICANH",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.35",
+      "diligencia": "MINISTERIO DEL INTERIOR - CONSULTA PREVIA",
+      "descripcion": "Carta Solicitud MININTERIOR",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.36",
+      "diligencia": "MINISTERIO DEL INTERIOR - CONSULTA PREVIA",
+      "descripcion": "Recibido Radicado MININTERIOR",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.37",
+      "diligencia": "MINISTERIO DEL INTERIOR - CONSULTA PREVIA",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.38",
+      "diligencia": "MINISTERIO DEL INTERIOR - CONSULTA PREVIA",
+      "descripcion": "Certificado MININTERIOR",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.39",
+      "diligencia": "NORMATIVA URBANISTICA POT, PBOT, EOT",
+      "descripcion": "Recibido Radicado Normativa Urbanistica POT, PBOT, EOT",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.40",
+      "diligencia": "NORMATIVA URBANISTICA POT, PBOT, EOT",
+      "descripcion": "Número de Radicado",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.41",
+      "diligencia": "NORMATIVA URBANISTICA POT, PBOT, EOT",
+      "descripcion": "Normativa Urbanistica POT, PBOT, EOT",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.42",
+      "diligencia": "CERTIFICADO USO DEL SUELO - ALCALDÍA",
+      "descripcion": "Carta Solicitud Usos de Suelo",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.43",
+      "diligencia": "CERTIFICADO USO DEL SUELO - ALCALDÍA",
+      "descripcion": "Recibido Radicado Certificado Uso del Suelo",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.44",
+      "diligencia": "CERTIFICADO USO DEL SUELO - ALCALDÍA",
+      "descripcion": "Número de Radicado",
+      "status": "NO APLICA",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.45",
+      "diligencia": "CERTIFICADO USO DEL SUELO - ALCALDÍA",
+      "descripcion": "Certificado USO DEL SUELO",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.46",
+      "diligencia": "ZONA DE COMPENSACIÓN FORESTAL",
+      "descripcion": "Carta Solicitud Zonas de Compensacion forestal - Municipal",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.47",
+      "diligencia": "ZONA DE COMPENSACIÓN FORESTAL",
+      "descripcion": "Recibido Radicado Solicitud Comp Forestal",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.48",
+      "diligencia": "ZONA DE COMPENSACIÓN FORESTAL",
+      "descripcion": "Número de Radicado",
+      "status": "COMPLETADO",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.49",
+      "diligencia": "ZONA DE COMPENSACIÓN FORESTAL",
+      "descripcion": "Certificado Z ona Comp. Forestal",
+      "status": "EN TRÁMITE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.50",
+      "diligencia": "LICENCIA DE CONSTRUCCIÓN - ALCALDÍA",
+      "descripcion": "Documentos Licencia de Construcción",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.51",
+      "diligencia": "LICENCIA DE CONSTRUCCIÓN - ALCALDÍA",
+      "descripcion": "Recibido Radicado Licencia de Construcción",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.52",
+      "diligencia": "LICENCIA DE CONSTRUCCIÓN - ALCALDÍA",
+      "descripcion": "Número de Radicado",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    },
+    {
+      "item": "4.53",
+      "diligencia": "LICENCIA DE CONSTRUCCIÓN - ALCALDÍA",
+      "descripcion": "Decreto Licencia de Construcción",
+      "status": "PENDIENTE",
+      "ruta": "",
+      "observaciones": "",
+      "fechaRadicacion": "",
+      "section": "Trámites y Solicitudes"
+    }
+  ]
+}

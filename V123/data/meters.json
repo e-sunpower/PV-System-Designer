@@ -1,0 +1,86 @@
+{
+  "version": "1.0",
+  "source": "Base de datos de medidores bidireccionales suministrada por el usuario",
+  "fields": [
+    "id",
+    "manufacturer",
+    "model",
+    "phase",
+    "price_cop",
+    "source"
+  ],
+  "meters": [
+    {
+      "id": "MONO-MICROSTAR-C2000",
+      "phase": "MONOFASICO",
+      "manufacturer": "Microstar",
+      "model": "C2000",
+      "price_cop": 600000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "MONO-MICROSTAR-C2000-SUNEO",
+      "phase": "MONOFASICO",
+      "manufacturer": "Microstar",
+      "model": "C2000 – Suneo",
+      "price_cop": 538475,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "BI-HEXING-HXE310",
+      "phase": "BIFASICO",
+      "manufacturer": "Hexing",
+      "model": "HXE310",
+      "price_cop": 1350000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-ISKRA-MT-174",
+      "phase": "TRIFASICO",
+      "manufacturer": "ISKRA",
+      "model": "MT-174",
+      "price_cop": 990000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-ISKRA-MT174-T1-SEMIDIRECTA",
+      "phase": "TRIFASICO",
+      "manufacturer": "ISKRA",
+      "model": "MT174-T1 semidirecta",
+      "price_cop": 1120000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-HEXING-HXE310",
+      "phase": "TRIFASICO",
+      "manufacturer": "Hexing",
+      "model": "HXE310",
+      "price_cop": 1380000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-HEXING-HXF300",
+      "phase": "TRIFASICO",
+      "manufacturer": "Hexing",
+      "model": "HXF300",
+      "price_cop": 1850000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-ISKRA-MT174",
+      "phase": "TRIFASICO",
+      "manufacturer": "ISKRA",
+      "model": "MT174",
+      "price_cop": 1290000,
+      "source": "Base suministrada por el usuario"
+    },
+    {
+      "id": "TRI-ITRON-SL7000",
+      "phase": "TRIFASICO",
+      "manufacturer": "Itron",
+      "model": "SL7000",
+      "price_cop": 3200000,
+      "source": "Base suministrada por el usuario"
+    }
+  ]
+}

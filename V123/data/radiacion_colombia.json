@@ -1,0 +1,10 @@
+{
+  "version": "2.0",
+  "pais": "Colombia",
+  "unidad": "kWh/m²/día",
+  "campos_mensuales": ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
+  "fuente_territorial": "DANE — DIVIPOLA MGN 2025",
+  "fuente_radiacion": "IDEAM — Promedios Climatológicos de Radiación Global / Radiación Solar Global Promedio Multianual",
+  "periodo_referencia": "Pendiente por registro",
+  "records": {}
+}
