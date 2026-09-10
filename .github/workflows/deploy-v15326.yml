@@ -1,0 +1,78 @@
+name: Deploy E-SUN POWER V153.26 bundle
+
+on:
+  push:
+    paths:
+      - 'ONLINE_DEPLOY_V15326'
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download V153.26 bundle
+        env:
+          SHARE_ID: f7R5anRL5hl-
+          FILE_ID: 01a08d24fb42770ea79239c34a5a0c8f
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          import os, requests
+          base='https://api.firestorage.ai/dev/file'
+          sid=os.environ['SHARE_ID']
+          fid=os.environ['FILE_ID']
+          s=requests.Session()
+          r=s.post(f'{base}/shares/{sid}/cushion-sessions',headers={'Content-Type':'application/json'},json={},timeout=60)
+          r.raise_for_status()
+          cushion=r.json()['cushionId']
+          r=s.post(f'{base}/shares/{sid}/files/{fid}/download',headers={'X-Firestorage-Cushion-Id':cushion},timeout=60)
+          r.raise_for_status()
+          info=r.json()
+          d=s.get(info['downloadUrl'],stream=True,timeout=180)
+          d.raise_for_status()
+          with open('/tmp/v15326.zip','wb') as out:
+              for chunk in d.iter_content(1024*1024):
+                  if chunk: out.write(chunk)
+          print('zip_bytes=',os.path.getsize('/tmp/v15326.zip'))
+          PY
+
+      - name: Install V153.26 into V123
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/v15326 ./V123
+          mkdir -p /tmp/v15326 ./V123
+          unzip -q /tmp/v15326.zip -d /tmp/v15326
+          ROOT=$(find /tmp/v15326 -mindepth 1 -maxdepth 1 -type d | head -n1)
+          cp -a "$ROOT"/. ./V123/
+          rm -rf ./V123/__pycache__
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('./V123/server.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("HOST = os.environ.get('HOST', '127.0.0.1')", "HOST = os.environ.get('HOST', '0.0.0.0')")
+          p.write_text(s,encoding='utf-8')
+          Path('./V123/data/projects.json').touch(exist_ok=True)
+          Path('./V123/data/projects.backup.json').touch(exist_ok=True)
+          PY
+          python -m py_compile ./V123/server.py
+          test -f ./V123/index.html
+          test -f ./V123/server.py
+          test -f ./V123/data/modules.json
+          test -f ./V123/data/inverters.json
+          echo "Imported files: $(find ./V123 -type f | wc -l)"
+
+      - name: Commit V153.26
+        run: |
+          set -euxo pipefail
+          git config user.name 'E-SUN POWER Bot'
+          git config user.email 'e-sunpower-bot@users.noreply.github.com'
+          git add V123
+          git commit -m 'feat: deploy complete E-SUN POWER V153.26' || echo 'No changes to commit'
+          git push origin HEAD:main
