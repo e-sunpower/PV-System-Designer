@@ -1,0 +1,22 @@
+E-SUN POWER — PV SYSTEM DESIGNER V153.24
+
+CORRECCIÓN PUNTUAL — DIAGRAMA UNIFILAR AGPE
+
+Se corrigió la distribución del diagrama unifilar dinámico de AGPE para evitar que conductores, bloques y textos se crucen.
+
+- Campo fotovoltaico separado del tren de protecciones y conversión.
+- Barra DC vertical dedicada que recoge todos los strings mostrados.
+- Conductores entre etapas en un carril inferior independiente, sin atravesar cajas.
+- Protección DC, inversor, protección AC, medidor/salida y red/cargas en bloques separados.
+- El almacenamiento queda en un bloque independiente inferior.
+- Se conserva la información dinámica calculada y no se eliminan datos.
+- Se conserva la estructura local con start_local.bat, server.py, data/ y atlas/.
+
+
+V153.24 — MEJORA PRESUPUESTO AGPE
+- La pestaña PRESUPUESTO incorpora el botón INCLUIR ACTIVIDAD.
+- Cada actividad manual permite editar descripción, detalle, unidad, cantidad, precio de costo, incremento comercial, impuesto y estado.
+- Se eliminó la columna FUENTE de la tabla económica AGPE.
+- La tabla se ajustó para ocupar el ancho disponible sin barra de desplazamiento horizontal.
+- Las actividades manuales múltiples se conservan al actualizar/recalcular el presupuesto.
+- Se conserva toda la funcionalidad anterior, incluida la generación del presupuesto imprimible y el unifilar corregido V153.23.

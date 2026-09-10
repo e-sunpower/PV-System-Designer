@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "source": "Base de datos de medidores bidireccionales suministrada por el usuario",
+  "version": "1.1",
+  "source": "MEDIDORES BIDIRECCIONALES.xlsx · base suministrada por el usuario",
   "fields": [
     "id",
     "manufacturer",
@@ -16,7 +16,8 @@
       "manufacturer": "Microstar",
       "model": "C2000",
       "price_cop": 600000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 600000
     },
     {
       "id": "MONO-MICROSTAR-C2000-SUNEO",
@@ -24,7 +25,8 @@
       "manufacturer": "Microstar",
       "model": "C2000 – Suneo",
       "price_cop": 538475,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 538475
     },
     {
       "id": "BI-HEXING-HXE310",
@@ -32,7 +34,8 @@
       "manufacturer": "Hexing",
       "model": "HXE310",
       "price_cop": 1350000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 1350000
     },
     {
       "id": "TRI-ISKRA-MT-174",
@@ -40,7 +43,8 @@
       "manufacturer": "ISKRA",
       "model": "MT-174",
       "price_cop": 990000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 990000
     },
     {
       "id": "TRI-ISKRA-MT174-T1-SEMIDIRECTA",
@@ -48,7 +52,8 @@
       "manufacturer": "ISKRA",
       "model": "MT174-T1 semidirecta",
       "price_cop": 1120000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 1120000
     },
     {
       "id": "TRI-HEXING-HXE310",
@@ -56,7 +61,8 @@
       "manufacturer": "Hexing",
       "model": "HXE310",
       "price_cop": 1380000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 1380000
     },
     {
       "id": "TRI-HEXING-HXF300",
@@ -64,7 +70,8 @@
       "manufacturer": "Hexing",
       "model": "HXF300",
       "price_cop": 1850000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 1850000
     },
     {
       "id": "TRI-ISKRA-MT174",
@@ -72,7 +79,8 @@
       "manufacturer": "ISKRA",
       "model": "MT174",
       "price_cop": 1290000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 1290000
     },
     {
       "id": "TRI-ITRON-SL7000",
@@ -80,7 +88,8 @@
       "manufacturer": "Itron",
       "model": "SL7000",
       "price_cop": 3200000,
-      "source": "Base suministrada por el usuario"
+      "source": "MEDIDORES BIDIRECCIONALES.xlsx · Precio publicado",
+      "price_published_cop": 3200000
     }
   ]
 }

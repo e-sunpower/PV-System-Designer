@@ -1,0 +1,3 @@
+E-SUN POWER PV System Designer V153.25
+
+Único cambio: se incorporaron cuatro paneles LONGi a la base de datos de módulos del módulo AGPE, conservando la base existente.

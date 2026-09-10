@@ -1,0 +1,14 @@
+E-SUN POWER / PV SYSTEM DESIGNER V153.26
+
+CAMBIO PRINCIPAL
+Se implementó almacenamiento persistente de proyectos dentro de la aplicación.
+
+- Los proyectos AGPE y GD se guardan en data/projects.json.
+- El archivo se escribe de forma atómica para reducir riesgo de corrupción.
+- Se conserva data/projects.backup.json como copia de respaldo de la versión anterior.
+- El navegador mantiene una copia local como respaldo y compatibilidad.
+- Al iniciar la aplicación, los proyectos locales existentes se migran automáticamente al almacenamiento interno y se sincronizan sin perder datos.
+- Se conserva toda la información del proyecto: datos del cliente, ubicación, parámetros, cálculos, presupuesto, estados, resultados y, para GD, desarrollo, estudios/diseños, cálculo, APU y cronograma.
+- La eliminación continúa siendo exclusivamente manual mediante el botón ELIMINAR.
+
+No se eliminaron equipos, bases de datos ni funcionalidades existentes.

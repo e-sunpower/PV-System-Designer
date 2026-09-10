@@ -1,0 +1,23 @@
+E-SUN POWER PV SYSTEM DESIGNER V153.22
+PAQUETE COMPLETO DEL PROYECTO + SERVIDOR LOCAL
+
+1. ARCHIVO PRINCIPAL PARA EJECUTAR LOCALMENTE:
+   start_local.bat
+   Puede hacer clic derecho sobre start_local.bat y seleccionar
+   "Ejecutar como administrador" cuando sea necesario.
+
+2. El archivo start_local.bat inicia server.py y abre/servirá la aplicación
+   local en el puerto 8765.
+
+3. Este paquete conserva el backend, las bases de datos y los recursos
+   necesarios para las funciones API del aplicativo.
+
+4. Se incorpora el index.html de la V153.22 con:
+   - Microinversor APsystems QT2-208 1728W TRIFASICO.
+   - Microinversor Hoymiles HMT-2000-4T (208V).
+   - Corrección de MARKETING ESUNA / ACTUALIZAR OPORTUNIDADES.
+
+5. No eliminar server.py, la carpeta data/ ni start_local.bat: son parte
+   del funcionamiento local completo del aplicativo.
+
+16. V153.22: sección AGPE 4. Ubicación y recurso solar sintetizada; HSP automática del Atlas ahora es editable por el diseñador y se utiliza en el cálculo al ser modificada. El mapa y detalle mensual quedan disponibles en un bloque desplegable para consulta.

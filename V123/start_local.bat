@@ -1,12 +1,21 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-REM Cerrar únicamente el proceso que esté escuchando en el puerto 8765,
-REM para evitar que el navegador siga usando una versión antigua del servidor.
-for /f "tokens=5" %%P in ('netstat -ano ^| findstr LISTENING ^| findstr :8765') do (
-  taskkill /F /PID %%P >nul 2>&1
-)
-timeout /t 1 /nobreak >nul
-start "E-SUN POWER V90" http://localhost:8765
-python server.py
-pause
+
+echo ================================================
+echo   E-SUN POWER PV System Designer V153.22
+echo   Servidor local: http://127.0.0.1:8765
+echo ================================================
+echo.
+
+echo Iniciando servidor local...
+start "E-SUN POWER - SERVIDOR LOCAL" /min cmd /c "python server.py"
+
+timeout /t 2 /nobreak >nul
+
+echo Abriendo E-SUN POWER en el navegador...
+start "" "http://127.0.0.1:8765"
+echo.
+echo No cierres la ventana del servidor mientras uses la aplicacion.
+echo Para detenerla, cierra la ventana negra del servidor.
+endlocal
