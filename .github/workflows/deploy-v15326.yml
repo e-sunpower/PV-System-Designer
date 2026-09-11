@@ -54,13 +54,19 @@ jobs:
           rm -rf ./V123/__pycache__
           python - <<'PY'
           from pathlib import Path
+          import re
           p=Path('./V123/server.py')
           s=p.read_text(encoding='utf-8')
           s=s.replace("HOST = os.environ.get('HOST', '127.0.0.1')", "HOST = os.environ.get('HOST', '0.0.0.0')")
+          old=re.compile(r"def _playwright_browser_path\(\):\n.*?\ndef _playwright_visible_mode\(\):",re.S)
+          new='''def _playwright_browser_path():\n    """Return a usable Chromium executable for Playwright.\n\n    Prefer an explicitly configured/system browser. If none exists (typical on\n    Render's Python runtime), resolve Playwright's own installed Chromium binary.\n    """\n    system_path=_find_chromium()\n    if system_path:\n        return system_path\n    try:\n        from playwright.sync_api import sync_playwright\n        pw=sync_playwright().start()\n        try:\n            bundled=pw.chromium.executable_path\n        finally:\n            pw.stop()\n        if bundled and Path(bundled).exists():\n            return str(Path(bundled))\n    except Exception:\n        pass\n    return None\n\ndef _playwright_visible_mode():'''
+          s,n=old.subn(new,s,count=1)
+          if n!=1:
+              raise SystemExit('No se encontró la función _playwright_browser_path para aplicar el parche.')
           p.write_text(s,encoding='utf-8')
+          PY
           Path('./V123/data/projects.json').touch(exist_ok=True)
           Path('./V123/data/projects.backup.json').touch(exist_ok=True)
-          PY
           python -m py_compile ./V123/server.py
           test -f ./V123/index.html
           test -f ./V123/server.py
