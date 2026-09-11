@@ -1,1 +1,1 @@
-Trigger deployment of E-SUN POWER PV System Designer V153.26 to V123/Render. Playwright bundled Chromium detection patch included.
+Trigger deployment of E-SUN POWER PV System Designer V153.26. Includes editable AGPE consumption matrix by equipment, Playwright bundled Chromium detection patch, and persistent project support.
