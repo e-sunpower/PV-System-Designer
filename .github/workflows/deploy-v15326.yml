@@ -11,6 +11,7 @@ on:
       - 'solar_vfd.js'
       - 'quote_document_patch.js'
       - 'quote-vfd-icon.svg'
+      - 'quote_vfd_icon_fix.js'
       - 'data/solar_vfd.json'
       - 'deploy_vfd_patch.py'
 
@@ -61,6 +62,7 @@ jobs:
           cp ./solar_vfd.js ./V123/solar_vfd.js
           cp ./quote_document_patch.js ./V123/quote_document_patch.js
           cp ./quote-vfd-icon.svg ./V123/quote-vfd-icon.svg
+          cp ./quote_vfd_icon_fix.js ./V123/quote_vfd_icon_fix.js
           cp ./data/solar_vfd.json ./V123/data/solar_vfd.json
           python - <<'PY'
           from pathlib import Path
@@ -95,6 +97,7 @@ jobs:
           bootstrap='<script src="consumption_matrix_bootstrap.js"></script>'
           solarvfd='<script src="solar_vfd.js"></script>'
           quotepatch='<script src="quote_document_patch.js"></script>'
+          vfdiconfix='<script src="quote_vfd_icon_fix.js"></script>'
           s=s.replace('<script src="consumption_schedule.js"></script>','')
           if matrix not in s:
               s=s.replace('</body>',matrix+'\n</body>',1) if '</body>' in s else s+'\n'+matrix+'\n'
@@ -106,6 +109,8 @@ jobs:
               s=s.replace('</body>',solarvfd+'\n</body>',1) if '</body>' in s else s+'\n'+solarvfd+'\n'
           if quotepatch not in s:
               s=s.replace('</body>',quotepatch+'\n</body>',1) if '</body>' in s else s+'\n'+quotepatch+'\n'
+          if vfdiconfix not in s:
+              s=s.replace('</body>',vfdiconfix+'\n</body>',1) if '</body>' in s else s+'\n'+vfdiconfix+'\n'
           p.write_text(s,encoding='utf-8')
           PY
           touch ./V123/data/projects.json ./V123/data/projects.backup.json
@@ -118,6 +123,7 @@ jobs:
           test -f ./V123/solar_vfd.js
           test -f ./V123/quote_document_patch.js
           test -f ./V123/quote-vfd-icon.svg
+          test -f ./V123/quote_vfd_icon_fix.js
           test -f ./V123/data/modules.json
           test -f ./V123/data/inverters.json
           test -f ./V123/data/solar_vfd.json
@@ -127,6 +133,7 @@ jobs:
           grep -q "consumption_matrix_bootstrap.js" ./V123/index.html
           grep -q "solar_vfd.js" ./V123/index.html
           grep -q "quote_document_patch.js" ./V123/index.html
+          grep -q "quote_vfd_icon_fix.js" ./V123/index.html
           grep -q "equipmentMode" ./V123/index.html
           grep -q "solar_vfd_required_kw" ./V123/index.html
           grep -q "solar_vfd" ./V123/server.py
@@ -138,5 +145,5 @@ jobs:
           git config user.name 'E-SUN POWER Bot'
           git config user.email 'e-sunpower-bot@users.noreply.github.com'
           git add V123
-          git commit -m 'fix: deploy VFD icon with application' || echo 'No changes to commit'
+          git commit -m 'fix: force VFD quotation icon' || echo 'No changes to commit'
           git push origin HEAD:main
