@@ -12,9 +12,27 @@
  const oldBattery=window.estimateBatteryFromKwp;if(typeof oldBattery==='function')window.estimateBatteryFromKwp=function(batteryData,dc_kwp,storageHours,acKw){const s=matrixSummary();if(s.backupDaily>0){const usable=Number(batteryData?.usable_capacity_kwh||0)||Number(batteryData?.capacity_kwh||0)*(Number(batteryData?.recommended_dod_pct||80)/100);if(usable<=0)return null;const required=s.backupDaily;const qe=Math.max(1,Math.ceil(required/usable));const qc=Number(batteryData?.recommended_charge_power_kw||0)>0?Math.max(1,Math.ceil(Number(dc_kwp||0)/Number(batteryData.recommended_charge_power_kw))):1;const qd=Number(batteryData?.recommended_discharge_power_kw||0)>0&&Number(acKw||0)>0?Math.max(1,Math.ceil(Number(acKw)/Number(batteryData.recommended_discharge_power_kw))):1;const qty=Math.max(qe,qc,qd);return{required_usable_kwh:required,usable_capacity_per_battery_kwh:usable,qty_energy:qe,qty_charge_power:qc,qty_discharge_power:qd,quantity:qty,installed_usable_kwh:qty*usable,installed_kwh:qty*Number(batteryData?.capacity_kwh||0),cost:qty*Number(batteryData?.price_cop||0)};}return oldBattery.apply(this,arguments);};
  const oldBatteryPreview=window.updateBatteryPreview;if(typeof oldBatteryPreview==='function')window.updateBatteryPreview=function(){const r=oldBatteryPreview.apply(this,arguments);const s=matrixSummary();if(s.backupDaily>0&&$('batterySizingNote'))$('batterySizingNote').textContent='CONSUMO A RESPALDAR: '+Number(s.backupDaily).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' kWh/día. La batería se dimensiona con base en esta energía de respaldo y los límites técnicos de energía, carga y descarga de la batería seleccionada.';return r;};
  function refreshBackupButtons(){const off=(($('systemType')?.value||'ON-GRID')==='OFF-GRID');document.querySelectorAll('.cm-backup').forEach(b=>{b.disabled=!off;});}
- function reorderSections(){const m=$('panel-matrix');if(!m)return;const candidates=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6,.label,.section-title,.card-title,.section-heading')];const h=candidates.find(el=>/Banco de bater[ií]as/i.test((el.textContent||'').trim()));if(!h)return;const b=h.closest('.offgrid-battery-card')||h.closest('.card')||h.parentElement;if(!b||b===m)return;const container=b.closest('.grid')||b.parentElement;if(!container)return;if(m.parentNode!==container)container.insertBefore(m,b);else if(b.previousElementSibling!==m)container.insertBefore(m,b);if(container.classList.contains('grid'))m.style.gridColumn='1 / -1';}
+ function reorderSections(){
+   const m=$('panel-matrix');if(!m)return;
+   const structure=$('structureTechnicalCard');
+   if(structure){
+     const parent=structure.parentElement;
+     if(parent){
+       if(m.parentNode!==parent||m.previousElementSibling!==structure)parent.insertBefore(m,structure.nextElementSibling);
+       if(parent.classList.contains('grid'))m.style.gridColumn='1 / -1';
+     }
+   }
+   const candidates=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6,.label,.section-title,.card-title,.section-heading')];
+   const h=candidates.find(el=>/Banco de bater[ií]as/i.test((el.textContent||'').trim()));
+   if(!h)return;
+   const b=h.closest('.offgrid-battery-card')||h.closest('.card')||h.parentElement;if(!b||b===m)return;
+   const container=b.closest('.grid')||b.parentElement;if(!container)return;
+   if(m.parentNode!==container)container.insertBefore(m,b);
+   else if(b.previousElementSibling!==m)container.insertBefore(m,b);
+   if(container.classList.contains('grid'))m.style.gridColumn='1 / -1';
+ }
  const oldOpen=window.openSavedProject;if(typeof oldOpen==='function')window.openSavedProject=function(){const r=oldOpen.apply(this,arguments);setTimeout(()=>{syncStructure();refreshBackupButtons();reorderSections();},0);return r;};
- document.addEventListener('change',e=>{if(e.target?.id==='structureType'){setTimeout(syncStructure,0);return;}if(e.target?.id==='systemType'){setTimeout(()=>{refreshBackupButtons();try{if(typeof window.updateBatterySelection==='function')window.updateBatterySelection();if(typeof window.syncBatteryBudgetRow==='function')window.syncBatteryBudgetRow();if(typeof window.updateBatteryPreview==='function')window.updateBatteryPreview();}catch(err){}},0);}});
+ document.addEventListener('change',e=>{if(e.target?.id==='structureType'){setTimeout(()=>{syncStructure();reorderSections();},0);return;}if(e.target?.id==='systemType'){setTimeout(()=>{refreshBackupButtons();try{if(typeof window.updateBatterySelection==='function')window.updateBatterySelection();if(typeof window.syncBatteryBudgetRow==='function')window.syncBatteryBudgetRow();if(typeof window.updateBatteryPreview==='function')window.updateBatteryPreview();}catch(err){}},0);}});
  function boot(){setTimeout(()=>{syncStructure();refreshBackupButtons();reorderSections();},0);}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
