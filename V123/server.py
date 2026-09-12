@@ -7,6 +7,7 @@ DATA = ROOT / 'data'
 DATA.mkdir(exist_ok=True)
 MODULES = DATA / 'modules.json'
 INVERTERS = DATA / 'inverters.json'
+SOLAR_VFDS = DATA / 'solar_vfd.json'
 BATTERIES = DATA / 'batteries.json'
 COSTS = DATA / 'costs_emergente.json'
 SUPPLIER_PRICES = DATA / 'supplier_prices.json'
@@ -693,6 +694,9 @@ def equipment():
 def batteries():
     return load(BATTERIES, [])
 
+def solar_vfds():
+    return load(SOLAR_VFDS, [])
+
 def meters():
     d=load(METERS, {'version':VER,'meters':[]})
     return d if isinstance(d,dict) else {'version':VER,'meters':d}
@@ -881,6 +885,8 @@ def calc_design(payload):
     solar_source=str(payload.get('solar_source') or 'Factor de producción manual')
     area_restriction=str(payload.get('area_restriction','true')).lower() in ('1','true','yes','si','sí','on')
     phase=str(payload.get('system_phase') or 'TRIFASICO').upper()
+    equipment_mode=str(payload.get('equipment_mode') or 'inverter').lower().strip()
+    if equipment_mode not in ('inverter','solar_vfd'): equipment_mode='inverter'
     if phase not in ('MONOFASICO','BIFASICO','TRIFASICO'): raise ValueError('Tipo de sistema no válido. Seleccione MONOFÁSICO, BIFÁSICO o TRIFÁSICO.')
     if calculation_method in ('consumption','consumption_or_check') and annual<=0: raise ValueError('Ingrese un consumo mensual o anual válido.')
     if calculation_method=='grid_capacity' and grid_available<=0: raise ValueError('La Capacidad disponible reportada por OR debe ser mayor que cero para calcular por capacidad disponible.')
@@ -1031,6 +1037,29 @@ def calc_design(payload):
                 if not found:
                     raise ValueError(f'No se encontró una configuración técnicamente válida sin superar la capacidad disponible reportada por el OR ({grid_available:.3f} kW).')
 
+    solar_vfd_result=None
+    if equipment_mode=='solar_vfd':
+        vfds=solar_vfds()
+        candidates_vfd=[(i,v) for i,v in enumerate(vfds) if str(v.get('phase_class','')).upper()==phase]
+        if not candidates_vfd:
+            raise ValueError(f'La base de variadores no contiene equipos para la fase {phase}.')
+        vi_raw=payload.get('solar_vfd_index')
+        if vi_raw in (None,''):
+            required_kw=float(payload.get('solar_vfd_required_kw') or 0)
+            viable=[(float(v.get('power_kw') or 0),i,v) for i,v in candidates_vfd if float(v.get('power_kw') or 0)>=required_kw-1e-9]
+            viable.sort(key=lambda x:(x[0],x[2].get('price_cop') or 0,x[1]))
+            vi=viable[0][1] if viable else min(candidates_vfd,key=lambda x:float(x[1].get('power_kw') or 0))[0]
+        else:
+            vi=int(vi_raw)
+            if vi<0 or vi>=len(vfds): raise ValueError('Variador de frecuencia solar no válido.')
+            if str(vfds[vi].get('phase_class','')).upper()!=phase: raise ValueError('El variador seleccionado no corresponde a la fase del sistema.')
+        v=vfds[vi]
+        power_kw=float(v.get('power_kw') or 0)
+        required_kw=float(payload.get('solar_vfd_required_kw') or 0)
+        if power_kw<=0: raise ValueError('El variador seleccionado no tiene potencia válida.')
+        if required_kw>power_kw+1e-9: raise ValueError(f'La potencia de diseño del variador ({required_kw:.2f} kW) supera la potencia disponible de {power_kw:.2f} kW en la base. Seleccione una referencia superior o revise la carga.')
+        solar_vfd_result={'index':vi,**v,'quantity':1,'required_power_kw':required_kw,'selection_basis':'Potencia máxima simultánea de la Matriz de Consumo + 10 % de margen','is_solar_vfd':True}
+        selected_inv=None
     phase_note=None
     if not phase_candidates:
         phase_note=f'La base suministrada no contiene inversores clasificados como {phase}.'
@@ -1048,6 +1077,9 @@ def calc_design(payload):
         else:
             electrical={'status':'NO_VALID_STRING','message':'No se encontró una configuración preliminar de strings compatible con los límites de tensión, corriente y capacidad de MPPT registrados en la ficha técnica.'}
 
+    if equipment_mode=='solar_vfd' and solar_vfd_result:
+        electrical={'status':'SOLAR_VFD','message':'El variador solar incorpora MPPT y reemplaza el inversor fotovoltaico convencional. La tensión, corriente, motor y configuración de bombeo deben verificarse con la ficha técnica del equipo y del motor.','power_kw':solar_vfd_result['power_kw'],'required_power_kw':solar_vfd_result['required_power_kw']}
+
     # OFF-GRID: size the battery bank automatically from daily energy demand and the selected battery database record.
     system_type=str(payload.get('system_type') or 'ON-GRID').upper()
     battery_result=None
@@ -1057,7 +1089,7 @@ def calc_design(payload):
             raise ValueError('No existe una base de datos de baterías disponible.')
         storage_hours=max(0.25,float(payload.get('battery_storage_hours') or 2.0))
         dc_kwp=float(dc_kwp or 0)
-        ac_required=float(selected_inv.get('ac_kw_total') or 0) if selected_inv else 0
+        ac_required=float(selected_inv.get('ac_kw_total') or 0) if selected_inv else float(solar_vfd_result.get('power_kw') or 0) if solar_vfd_result else 0
 
         def battery_calc(bat):
             usable=float(bat.get('usable_capacity_kwh') or 0)
@@ -1109,12 +1141,12 @@ def calc_design(payload):
         battery_result={'index':bi,'selection_mode':mode,'suggested_index':suggested_index,'is_suggested':bi==suggested_index,**bat,'quantity':qty,'dc_kwp_reference':dc_kwp,'storage_hours_per_kwp':storage_hours,'required_usable_kwh':required_usable_kwh,'usable_capacity_per_battery_kwh':usable_per_battery,'required_nominal_kwh':required_usable_kwh/(float(bat.get('recommended_dod_pct') or 80.0)/100.0),'installed_kwh':installed_nominal,'installed_usable_kwh':installed_usable,'qty_energy':qty_energy,'qty_charge_power':qty_charge,'qty_discharge_power':qty_discharge,'pv_charge_power_kw':dc_kwp,'inverter_ac_power_kw':ac_required,'total_price_cop':qty*float(bat.get('price_cop') or 0),'price_per_kwh_cop':float(bat.get('price_per_kwh_cop') or 0),'suggested_total_price_cop':recommended[0][0],'design_method':'kWp DC × horas equivalentes de almacenamiento + límites de potencia de carga/descarga de la ficha técnica'}
     return {
         'version':VER,
-        'inputs':{'consumption_monthly_kwh':monthly if monthly>0 else None,'consumption_annual_kwh':annual,'calculation_method':calculation_method,'grid_available_kw':grid_available if calculation_method in ('grid_capacity','consumption_or_check') else None,'grid_dc_ac_ratio':grid_dc_ac_ratio if calculation_method=='grid_capacity' else None,'area_m2':area,'savings_pct':savings,'yield_kwh_kwp_year':yield_factor,'area_restriction':area_restriction,'losses_pct':losses_pct,'solar_hsp':solar_hsp,'solar_source':solar_source,'solar_mode':solar_mode,'system_phase':phase,'system_type':system_type,'battery_storage_hours':storage_hours if system_type=='OFF-GRID' else None},
+        'inputs':{'consumption_monthly_kwh':monthly if monthly>0 else None,'consumption_annual_kwh':annual,'calculation_method':calculation_method,'grid_available_kw':grid_available if calculation_method in ('grid_capacity','consumption_or_check') else None,'grid_dc_ac_ratio':grid_dc_ac_ratio if calculation_method=='grid_capacity' else None,'area_m2':area,'savings_pct':savings,'yield_kwh_kwp_year':yield_factor,'area_restriction':area_restriction,'losses_pct':losses_pct,'solar_hsp':solar_hsp,'solar_source':solar_source,'solar_mode':solar_mode,'system_phase':phase,'system_type':system_type,'battery_storage_hours':storage_hours if system_type=='OFF-GRID' else None,'equipment_mode':equipment_mode},
         'module':{'index':mi,**m,'area_m2':ma},
         'target':{'target_kwh_year':target_kwh,'required_kwp':required_kwp,'required_modules':required_modules,'max_modules_area':max_modules_area,'target_ac_kw':target_ac_kw,'basis':calculation_method},
         'area':{'available_area_m2':area,'module_area_m2':ma,'max_modules':max_modules_area,'occupied_area_m2':occupied,'remaining_area_m2':remaining,'status':'OK' if (not area_restriction or selected_modules<=max_modules_area) else 'AREA_LIMIT'},
         'system':{'modules':selected_modules,'dc_kwp':dc_kwp,'area_occupied_m2':occupied,'area_remaining_m2':remaining,'achieved_kwh_year':achieved_kwh,'achieved_savings_pct':achieved_savings,'area_limited':area_limited,'phase':phase,'calculation_method':calculation_method,'grid_available_kw':grid_available if calculation_method in ('grid_capacity','consumption_or_check') else None,'ac_connection_limit_kw':grid_available if calculation_method in ('grid_capacity','consumption_or_check') else None},
-        'inverter':selected_inv,'electrical':electrical,'phase_note':phase_note,'battery':battery_result,
+        'inverter':selected_inv,'solar_vfd':solar_vfd_result,'electrical':electrical,'phase_note':phase_note,'battery':battery_result,
         'note':'Los equipos utilizados provienen exclusivamente de la base de datos suministrada por el usuario. Los límites eléctricos incorporados se contrastan con fichas técnicas de fabricante cuando existe fuente registrada; la columna Fases de la base suministrada gobierna el filtro BIFÁSICO/TRIFÁSICO.'
     }
 
