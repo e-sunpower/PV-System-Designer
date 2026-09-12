@@ -90,38 +90,44 @@
   function findClickableText(text){
     const els=[...document.querySelectorAll('button,a,[role="button"],.tab')];
     const target=text.trim().toLowerCase();
-    return els.find(el=>el.id!=='agpeShell' && !el.closest('#agpeShell') && (el.textContent||'').trim().toLowerCase()===target)
-      || els.find(el=>el.id!=='agpeShell' && !el.closest('#agpeShell') && (el.textContent||'').trim().toLowerCase().includes(target));
+    return els.find(el=>!el.closest('#agpeShell') && (el.textContent||'').trim().toLowerCase()===target)
+      || els.find(el=>!el.closest('#agpeShell') && (el.textContent||'').trim().toLowerCase().includes(target));
   }
-  function openLegacyApp(mode){
+  function revealLegacy(mode){
     shell.classList.remove('visible');
     document.body.classList.remove('agpe-shell-active');
     document.querySelectorAll('body>header,body>main').forEach(el=>{el.style.visibility='';el.style.pointerEvents='';});
-    if(mode==='pumping'){
+    if(mode){
       const sel=document.getElementById('equipmentMode');
-      if(sel){sel.value='solar_vfd';sel.dispatchEvent(new Event('change',{bubbles:true}));}
-    }else if(mode==='traditional'){
-      const sel=document.getElementById('equipmentMode');
-      if(sel){sel.value='inverter';sel.dispatchEvent(new Event('change',{bubbles:true}));}
+      if(sel){sel.value=mode==='pumping'?'solar_vfd':'inverter';sel.dispatchEvent(new Event('change',{bubbles:true}));}
     }
     window.scrollTo({top:0,behavior:'instant'});
   }
+  function openLegacyApp(mode){revealLegacy(mode);}
   function openSaved(){
-    shell.classList.remove('visible');
-    document.body.classList.remove('agpe-shell-active');
-    document.querySelectorAll('body>header,body>main').forEach(el=>{el.style.visibility='';el.style.pointerEvents='';});
-    const candidates=['PROYECTOS GUARDADOS','PROYECTOS GUARDADOS'];
-    let btn=null;for(const t of candidates){btn=findClickableText(t);if(btn)break;}
-    if(btn){try{btn.click();return;}catch(e){}}
-    window.scrollTo({top:0,behavior:'instant'});
+    revealLegacy(null);
+    const btn=findClickableText('PROYECTOS GUARDADOS');
+    if(btn){setTimeout(()=>{try{btn.click();}catch(e){}},50);}
   }
   function activate(){
     const portal=document.getElementById('accessPortal');
     const locked=document.body.classList.contains('app-locked');
-    if(locked || (portal && visible(portal))){shell.classList.remove('visible');return;}
+    if(locked || (portal && visible(portal))){shell.classList.remove('visible');return false;}
     document.body.classList.add('agpe-shell-active');
     document.querySelectorAll('body>header,body>main').forEach(el=>{el.style.visibility='hidden';el.style.pointerEvents='none';});
     shell.classList.add('visible');
+    return true;
+  }
+  function activateAfterAccess(){
+    let tries=0;
+    const tick=()=>{
+      tries++;
+      const portal=document.getElementById('accessPortal');
+      const locked=document.body.classList.contains('app-locked');
+      if(!locked && (!portal || !visible(portal))){activate();return;}
+      if(tries<20)setTimeout(tick,250);
+    };
+    setTimeout(tick,150);
   }
   shell.addEventListener('click',e=>{
     const card=e.target.closest('[data-open]');
@@ -138,15 +144,24 @@
     }
   });
 
+  function hookAccessButton(){
+    const btn=findClickableText('INGRESAR A E-SUN POWER');
+    if(!btn || btn.__esunAgpeHooked)return;
+    btn.__esunAgpeHooked=true;
+    btn.addEventListener('click',()=>activateAfterAccess(),{capture:false});
+  }
   function waitForAccess(){
+    hookAccessButton();
     const portal=document.getElementById('accessPortal');
     if(portal){
-      const obs=new MutationObserver(()=>{if(!document.body.classList.contains('app-locked') && !visible(portal))activate();});
+      const obs=new MutationObserver(()=>{hookAccessButton();if(!document.body.classList.contains('app-locked') && !visible(portal))activate();});
       obs.observe(document.body,{attributes:true,attributeFilter:['class']});
-      obs.observe(portal,{attributes:true,attributeFilter:['class','style']});
+      obs.observe(portal,{attributes:true,attributeFilter:['class','style','hidden']});
     }
-    setTimeout(activate,700);
-    setTimeout(activate,1800);
+    setTimeout(hookAccessButton,250);
+    setTimeout(hookAccessButton,700);
+    setTimeout(activate,1200);
+    setTimeout(activate,2200);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',waitForAccess,{once:true});else waitForAccess();
 })();
