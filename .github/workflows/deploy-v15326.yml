@@ -9,6 +9,7 @@ on:
       - 'consumption_project_integration.js'
       - 'consumption_matrix_bootstrap.js'
       - 'solar_vfd.js'
+      - 'quote_document_patch.js'
       - 'data/solar_vfd.json'
       - 'deploy_vfd_patch.py'
 
@@ -57,6 +58,7 @@ jobs:
           cp ./consumption_project_integration.js ./V123/consumption_project_integration.js
           cp ./consumption_matrix_bootstrap.js ./V123/consumption_matrix_bootstrap.js
           cp ./solar_vfd.js ./V123/solar_vfd.js
+          cp ./quote_document_patch.js ./V123/quote_document_patch.js
           cp ./data/solar_vfd.json ./V123/data/solar_vfd.json
           python - <<'PY'
           from pathlib import Path
@@ -90,6 +92,7 @@ jobs:
           integration='<script src="consumption_project_integration.js"></script>'
           bootstrap='<script src="consumption_matrix_bootstrap.js"></script>'
           solarvfd='<script src="solar_vfd.js"></script>'
+          quotepatch='<script src="quote_document_patch.js"></script>'
           s=s.replace('<script src="consumption_schedule.js"></script>','')
           if matrix not in s:
               s=s.replace('</body>',matrix+'\n</body>',1) if '</body>' in s else s+'\n'+matrix+'\n'
@@ -99,6 +102,8 @@ jobs:
               s=s.replace('</body>',bootstrap+'\n</body>',1) if '</body>' in s else s+'\n'+bootstrap+'\n'
           if solarvfd not in s:
               s=s.replace('</body>',solarvfd+'\n</body>',1) if '</body>' in s else s+'\n'+solarvfd+'\n'
+          if quotepatch not in s:
+              s=s.replace('</body>',quotepatch+'\n</body>',1) if '</body>' in s else s+'\n'+quotepatch+'\n'
           p.write_text(s,encoding='utf-8')
           PY
           touch ./V123/data/projects.json ./V123/data/projects.backup.json
@@ -109,6 +114,7 @@ jobs:
           test -f ./V123/consumption_project_integration.js
           test -f ./V123/consumption_matrix_bootstrap.js
           test -f ./V123/solar_vfd.js
+          test -f ./V123/quote_document_patch.js
           test -f ./V123/data/modules.json
           test -f ./V123/data/inverters.json
           test -f ./V123/data/solar_vfd.json
@@ -117,6 +123,7 @@ jobs:
           grep -q "consumption_project_integration.js" ./V123/index.html
           grep -q "consumption_matrix_bootstrap.js" ./V123/index.html
           grep -q "solar_vfd.js" ./V123/index.html
+          grep -q "quote_document_patch.js" ./V123/index.html
           grep -q "equipmentMode" ./V123/index.html
           grep -q "solar_vfd_required_kw" ./V123/index.html
           grep -q "solar_vfd" ./V123/server.py
