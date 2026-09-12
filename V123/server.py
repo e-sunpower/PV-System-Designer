@@ -1601,8 +1601,6 @@ def _browser_wait_for_result(ws, timeout=15):
     return text
 
 def _playwright_browser_path():
-    # Prefer an explicitly configured/system browser. If none exists on Render,
-    # resolve Playwright's own bundled Chromium executable.
     system_path = _find_chromium()
     if system_path:
         return system_path
