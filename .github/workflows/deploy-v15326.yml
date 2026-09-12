@@ -5,6 +5,8 @@ on:
     paths:
       - 'ONLINE_DEPLOY_V15326'
       - '.github/workflows/deploy-v15326.yml'
+      - 'consumption_matrix.js'
+      - 'consumption_schedule.js'
 
 permissions:
   contents: write
@@ -54,6 +56,7 @@ jobs:
           cp -a "$ROOT"/. ./V123/
           rm -rf ./V123/__pycache__
           cp ./consumption_matrix.js ./V123/consumption_matrix.js
+          cp ./consumption_schedule.js ./V123/consumption_schedule.js
           python - <<'PY'
           from pathlib import Path
           p=Path('./V123/server.py')
@@ -87,13 +90,14 @@ jobs:
           from pathlib import Path
           p=Path('./V123/index.html')
           s=p.read_text(encoding='utf-8')
-          tag='<script src="consumption_matrix.js"></script>'
-          if tag not in s:
-              marker='</body>'
-              if marker in s:
-                  s=s.replace(marker,tag+'\n'+marker,1)
-              else:
-                  s += '\n'+tag+'\n'
+          tags=['<script src="consumption_matrix.js"></script>','<script src="consumption_schedule.js"></script>']
+          for tag in tags:
+              if tag not in s:
+                  marker='</body>'
+                  if marker in s:
+                      s=s.replace(marker,tag+'\n'+marker,1)
+                  else:
+                      s += '\n'+tag+'\n'
           p.write_text(s,encoding='utf-8')
           PY
           touch ./V123/data/projects.json ./V123/data/projects.backup.json
@@ -101,10 +105,12 @@ jobs:
           test -f ./V123/index.html
           test -f ./V123/server.py
           test -f ./V123/consumption_matrix.js
+          test -f ./V123/consumption_schedule.js
           test -f ./V123/data/modules.json
           test -f ./V123/data/inverters.json
           grep -q "pw.chromium.executable_path" ./V123/server.py
           grep -q "consumption_matrix.js" ./V123/index.html
+          grep -q "consumption_schedule.js" ./V123/index.html
           echo "Imported files: $(find ./V123 -type f | wc -l)"
 
       - name: Commit V153.26
@@ -113,5 +119,5 @@ jobs:
           git config user.name 'E-SUN POWER Bot'
           git config user.email 'e-sunpower-bot@users.noreply.github.com'
           git add V123
-          git commit -m 'feat: add editable AGPE consumption matrix' || echo 'No changes to commit'
+          git commit -m 'feat: add consumption schedule and hourly profile' || echo 'No changes to commit'
           git push origin HEAD:main
