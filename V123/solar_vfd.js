@@ -8,18 +8,19 @@
 
   function inject(){
     const inv=$('inverter');
-    if(!inv||$('equipmentMode'))return;
+    if(!inv)return;
     const section=inv.closest('section.card');
     if(!section)return;
     const label=inv.previousElementSibling;
     const mode=document.createElement('div');
     mode.innerHTML='<label class="label" style="margin-top:0">Tipo de equipo de conversión</label><select id="equipmentMode"><option value="inverter">INVERSOR FOTOVOLTAICO — BASE EXISTENTE</option><option value="solar_vfd">VARIADOR DE FRECUENCIA SOLAR — BASE DE BOMBEO</option></select><p class="muted" style="margin-top:8px">Seleccione si el sistema utilizará el inversor fotovoltaico convencional o un variador solar con MPPT. En modo variador, la selección se dimensiona con la potencia máxima simultánea de la Matriz de Consumo.</p>';
-    section.insertBefore(mode,label);
+    if(!$('equipmentMode'))section.insertBefore(mode,label);
     const block=document.createElement('div');
     block.id='solarVfdBlock';
     block.style.display='none';
     block.innerHTML='<label class="label">Variador de frecuencia solar <span class="pill">TRIFÁSICO</span></label><select id="solarVfd"></select><input id="solarVfdRequiredInput" type="hidden" value=""><div id="solarVfdTechCard" class="equipment-spec-grid" style="margin-top:12px"></div><div class="resultbox" style="margin-top:12px"><div><b>POTENCIA MÁXIMA SIMULTÁNEA DE LA MATRIZ</b><div id="solarVfdPeakKw" class="big">—</div></div><div style="margin-top:10px"><b>POTENCIA DE DISEÑO DEL VARIADOR (+10 %)</b><div id="solarVfdRequiredKw" class="big">—</div></div><div id="solarVfdSizingNote" class="muted" style="margin-top:8px">Ingrese equipos y horarios en la Matriz de Consumo para seleccionar automáticamente el variador.</div></div>';
-    section.insertBefore(block,inv);
+    if(!$('solarVfdBlock'))section.insertBefore(block,inv);
+    inv.style.display='';
   }
   function matrixRows(){
     return [...document.querySelectorAll('#consumptionMatrixBody tr')].map(tr=>{const get=k=>tr.querySelector(`[data-field="${k}"]`)?.value||'';return{power:Number(get('power'))||0,qty:Number(get('qty'))||0,start:get('start'),end:get('end'),util:Number(get('util'))||0};}).filter(r=>r.power>0&&r.qty>0&&r.start&&r.end);
