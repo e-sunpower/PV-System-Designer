@@ -2,8 +2,7 @@ services:
   - type: web
     name: esun-power-pv-system-designer
     runtime: python
-    rootDir: V123
-    buildCommand: python -m py_compile server.py
+    buildCommand: python -m py_compile server.py V123/server.py
     startCommand: python server.py
     healthCheckPath: /api/health
     autoDeploy: true
