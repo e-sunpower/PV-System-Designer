@@ -1,0 +1,80 @@
+[
+  {
+    "id": "inomaxtech-max500-pv-11kw",
+    "manufacturer": "INOMAXTECH",
+    "model": "MAX500-PV",
+    "power_kw": 11,
+    "motor_recommended_hp": "15 HP",
+    "output_voltage": "220 V trifásico",
+    "mppt_solar": true,
+    "price_cop": 4990000,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  },
+  {
+    "id": "invt-gd100-15kw",
+    "manufacturer": "INVT",
+    "model": "GD100",
+    "power_kw": 15,
+    "motor_recommended_hp": "15–20 HP",
+    "output_voltage": "380/400 V trifásico",
+    "mppt_solar": true,
+    "price_cop": 3036101,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  },
+  {
+    "id": "connera-forward-n-11",
+    "manufacturer": "CONNERA",
+    "model": "Forward-N 11",
+    "power_kw": 11,
+    "motor_recommended_hp": "15 HP",
+    "output_voltage": "Según versión",
+    "mppt_solar": true,
+    "price_cop": 8953944,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  },
+  {
+    "id": "connera-forward-n-15",
+    "manufacturer": "CONNERA",
+    "model": "Forward-N 15",
+    "power_kw": 15,
+    "motor_recommended_hp": "20 HP",
+    "output_voltage": "Según versión",
+    "mppt_solar": true,
+    "price_cop": 10441992,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  },
+  {
+    "id": "inomax-max-pv-tablero-11kw",
+    "manufacturer": "INOMAX",
+    "model": "MAX-PV en tablero",
+    "power_kw": 11,
+    "motor_recommended_hp": "15 HP",
+    "output_voltage": "220 V trifásico",
+    "mppt_solar": true,
+    "price_cop": 9265000,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  },
+  {
+    "id": "nastec-vasco-solar",
+    "manufacturer": "Nastec",
+    "model": "VASCO Solar",
+    "power_kw": 11,
+    "motor_recommended_hp": "Según configuración",
+    "output_voltage": "Trifásico",
+    "mppt_solar": true,
+    "price_cop": 13524000,
+    "phase_class": "TRIFASICO",
+    "technical_status": "Base de datos suministrada por el usuario",
+    "source": "Base de datos de variadores de frecuencia solar suministrada por el usuario"
+  }
+]
