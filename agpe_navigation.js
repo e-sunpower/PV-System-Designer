@@ -24,7 +24,31 @@
   #agpeShell .agpe-title{font-size:22px;margin:0 0 20px}
   #agpeShell .agpe-path{color:#999;font-size:12px;margin-bottom:18px}
   #agpeShell .agpe-placeholder{max-width:720px;background:#252525;border:1px solid #454545;border-radius:12px;padding:26px;color:#cfcfcf;line-height:1.55}
-  @media(max-width:850px){#agpeShell .agpe-grid{grid-template-columns:1fr}#agpeShell .agpe-wrap{padding:22px 16px}}
+
+  /* Selector de tipo de proyecto: anillos solares independientes */
+  #agpeShell .agpe-project-types{display:grid;grid-template-columns:repeat(2,minmax(340px,1fr));gap:70px;justify-items:center;align-items:start;margin:28px auto 0;max-width:980px}
+  #agpeShell .agpe-project-ring-card{position:relative;width:430px;height:430px;display:grid;place-items:center;cursor:pointer;background:transparent;border:0;padding:0;color:#fff;transition:transform .25s ease,filter .25s ease}
+  #agpeShell .agpe-project-ring-card:hover{transform:translateY(-5px) scale(1.015);filter:brightness(1.08)}
+  #agpeShell .agpe-project-ring-card:focus-visible{outline:2px solid #f3c000;outline-offset:8px;border-radius:50%}
+  #agpeShell .agpe-solar-ring{position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at center,#070707 0 54%,transparent 54.5%),conic-gradient(from 0deg,transparent 0 12%,rgba(243,192,0,.98) 13%,rgba(255,229,92,.25) 16%,transparent 19% 36%,rgba(243,192,0,.9) 37%,transparent 41% 58%,rgba(255,244,150,1) 59%,rgba(243,192,0,.18) 62%,transparent 66% 82%,rgba(243,192,0,.9) 83%,transparent 87% 100%);box-shadow:0 0 10px rgba(243,192,0,.8),0 0 28px rgba(243,192,0,.52),inset 0 0 18px rgba(243,192,0,.32);animation:agpeRingWave 5.2s linear infinite}
+  #agpeShell .agpe-solar-ring:before{content:"";position:absolute;inset:13px;border-radius:50%;border:2px solid rgba(243,192,0,.96);box-shadow:0 0 8px rgba(243,192,0,.85),0 0 20px rgba(243,192,0,.45);animation:agpeRingPulse 2.8s ease-in-out infinite}
+  #agpeShell .agpe-solar-ring:after{content:"";position:absolute;inset:29px;border-radius:50%;border:3px solid rgba(243,192,0,.9);box-shadow:0 0 12px rgba(243,192,0,.72),inset 0 0 10px rgba(243,192,0,.22);animation:agpeRingWave2 3.7s ease-in-out infinite}
+  #agpeShell .agpe-project-ring-card:nth-child(2) .agpe-solar-ring{animation-delay:-2.1s}
+  #agpeShell .agpe-project-ring-card:nth-child(2) .agpe-solar-ring:before{animation-delay:-1.15s}
+  #agpeShell .agpe-project-ring-card:nth-child(2) .agpe-solar-ring:after{animation-delay:-2.25s}
+  #agpeShell .agpe-solar-rays{position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(243,192,0,.95) 0deg 1.3deg,transparent 1.3deg 30deg);mask:radial-gradient(circle,#0000 0 54%,#000 55% 57%,#0000 58%);-webkit-mask:radial-gradient(circle,#0000 0 54%,#000 55% 57%,#0000 58%);animation:agpeRayPulse 2.9s ease-in-out infinite}
+  #agpeShell .agpe-project-ring-card:nth-child(2) .agpe-solar-rays{animation-delay:-1.4s}
+  #agpeShell .agpe-ring-content{position:relative;z-index:2;width:270px;min-height:285px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+  #agpeShell .agpe-project-icon{width:118px;height:118px;margin-bottom:8px;filter:drop-shadow(0 0 7px rgba(243,192,0,.95)) drop-shadow(0 0 18px rgba(243,192,0,.55))}
+  #agpeShell .agpe-ring-content h3{margin:5px 0 10px;font-size:20px;line-height:1.12;letter-spacing:.035em;color:#fff;text-shadow:0 0 8px rgba(255,255,255,.12)}
+  #agpeShell .agpe-ring-content p{margin:0;color:#bdbdbd;font-size:13px;line-height:1.4;max-width:235px}
+  #agpeShell .agpe-ring-arrow{width:48px;height:48px;border:1.5px solid #f3c000;border-radius:50%;display:grid;place-items:center;margin-top:16px;color:#f3c000;font-size:24px;line-height:1;box-shadow:0 0 10px rgba(243,192,0,.45);transition:.2s ease}
+  #agpeShell .agpe-project-ring-card:hover .agpe-ring-arrow{background:#f3c000;color:#111;box-shadow:0 0 22px rgba(243,192,0,.8)}
+  @keyframes agpeRingWave{0%{transform:rotate(0deg) scale(1);filter:brightness(.95)}50%{transform:rotate(180deg) scale(1.012);filter:brightness(1.15)}100%{transform:rotate(360deg) scale(1);filter:brightness(.95)}}
+  @keyframes agpeRingPulse{0%,100%{opacity:.72;transform:scale(.99)}50%{opacity:1;transform:scale(1.015)}}
+  @keyframes agpeRingWave2{0%,100%{opacity:.58;transform:scale(.985)}50%{opacity:1;transform:scale(1.025)}}
+  @keyframes agpeRayPulse{0%,100%{opacity:.55;transform:rotate(0deg)}50%{opacity:1;transform:rotate(5deg)}}
+  @media(max-width:850px){#agpeShell .agpe-grid{grid-template-columns:1fr}#agpeShell .agpe-wrap{padding:22px 16px}#agpeShell .agpe-project-types{grid-template-columns:1fr;gap:30px}#agpeShell .agpe-project-ring-card{width:min(430px,92vw);height:min(430px,92vw)}}
   `;
   const style=document.createElement('style');style.id='agpeNavigationStyle';style.textContent=css;document.head.appendChild(style);
 
@@ -58,10 +82,55 @@
       <section id="agpeNew" class="agpe-view">
         <button class="agpe-back" data-back="calculo">← VOLVER</button>
         <div class="agpe-path">E-SUN POWER AGPE / CÁLCULO DE / NUEVO PROYECTO</div>
-        <h2 class="agpe-title">NUEVO PROYECTO</h2>
-        <div class="agpe-grid">
-          <div class="agpe-card primary" data-action="traditional"><h2>SFV TRADICIONAL</h2><p>Diseño de sistemas fotovoltaicos tradicionales.</p></div>
-          <div class="agpe-card primary" data-action="pumping"><h2>SFV BOMBEO SOLAR</h2><p>Diseño de sistemas fotovoltaicos para bombeo solar.</p></div>
+        <div style="text-align:center;margin-top:12px">
+          <div style="color:#999;font-size:12px;letter-spacing:.22em;margin-bottom:8px">AGPE / CÁLCULO DE / NUEVO PROYECTO</div>
+          <h2 class="agpe-title" style="font-size:30px;margin-bottom:8px">NUEVO PROYECTO</h2>
+          <p style="margin:0;color:#bdbdbd;font-size:16px">Seleccione el tipo de proyecto que desea crear.</p>
+        </div>
+        <div class="agpe-project-types">
+          <button class="agpe-project-ring-card" type="button" data-action="traditional" aria-label="Proyecto SFV Tradicional">
+            <span class="agpe-solar-ring" aria-hidden="true"></span>
+            <span class="agpe-solar-rays" aria-hidden="true"></span>
+            <span class="agpe-ring-content">
+              <svg class="agpe-project-icon" viewBox="0 0 120 120" aria-hidden="true">
+                <g fill="none" stroke="#f3c000" stroke-width="3" stroke-linejoin="round">
+                  <path d="M18 60 60 31l42 29v38H18z"/>
+                  <path d="M48 98V77h24v21"/>
+                  <path d="M28 64h64"/>
+                  <path d="M36 56 52 45l25 17-16 11z"/>
+                  <path d="M42 52 67 69"/>
+                  <path d="M53 44 79 61"/>
+                  <circle cx="27" cy="29" r="9"/>
+                  <path d="M27 14v-7M27 51v-7M12 29H5M49 29h-7M16 18l-5-5M38 40l-5-5M38 18l5-5"/>
+                </g>
+              </svg>
+              <h3>PROYECTO<br>SFV TRADICIONAL</h3>
+              <p>Diseño y dimensionamiento de sistemas fotovoltaicos tradicionales.</p>
+              <span class="agpe-ring-arrow" aria-hidden="true">→</span>
+            </span>
+          </button>
+
+          <button class="agpe-project-ring-card" type="button" data-action="pumping" aria-label="Proyecto Bombeo Solar">
+            <span class="agpe-solar-ring" aria-hidden="true"></span>
+            <span class="agpe-solar-rays" aria-hidden="true"></span>
+            <span class="agpe-ring-content">
+              <svg class="agpe-project-icon" viewBox="0 0 120 120" aria-hidden="true">
+                <g fill="none" stroke="#f3c000" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+                  <circle cx="28" cy="22" r="9"/>
+                  <path d="M28 7V1M28 43v-6M13 22H7M49 22h-6M17 11l-5-5M39 33l-5-5M39 11l5-5"/>
+                  <path d="M18 61 51 39l35 25-33 21z"/>
+                  <path d="M29 58 59 79M40 51l31 22M51 44l31 22"/>
+                  <path d="M51 85v23M73 83v25M42 108h40"/>
+                  <path d="M86 63h11v-18h9"/>
+                  <path d="M106 45c0 0 4 3 4 7 0 4-4 6-4 10 0 4 4 6 4 10 0 4-4 7-4 11"/>
+                  <path d="M91 76c4 4 9 4 13 0M91 84c4 4 9 4 13 0M91 92c4 4 9 4 13 0"/>
+                </g>
+              </svg>
+              <h3>PROYECTO<br>BOMBEO SOLAR</h3>
+              <p>Diseño y dimensionamiento de sistemas fotovoltaicos para bombeo solar.</p>
+              <span class="agpe-ring-arrow" aria-hidden="true">→</span>
+            </span>
+          </button>
         </div>
       </section>
 
